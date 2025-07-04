@@ -1295,7 +1295,6 @@ async function main() {
     if (ConfOverridePollInterval == 0) {
         confBatPollTime = parseInt(adapter.config.ConfPollInterval);
     } else {
-        adapter.log.info('Override Poll, so use from state and not from settings: ' + adapter.config.ConfOverridePollInterval);
         const OverridePollState = await adapter.getState("System.OverridePoll");
         confBatPollTime = OverridePollState ? OverridePollState.val : 60;
     }
@@ -1303,6 +1302,7 @@ async function main() {
         //confBatPollTime = 60;
         adapter.log.warn('poll to often - recommendation is not more than every 3 seconds');
     }
+    adapter.log.info('Override Poll, so use from state and not from settings: ' + adapter.config.ConfOverridePollInterval);
     adapter.log.info('Poll Interval: ' + confBatPollTime);
     
     ConfBydTowerCount = adapter.config.ConfBydTowerCount ? adapter.config.ConfBydTowerCount : 1;
