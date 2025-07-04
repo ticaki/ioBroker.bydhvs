@@ -1291,11 +1291,11 @@ async function main() {
 
     // The adapters config (in the instance object everything under the attribute "native") is accessible via
     // adapter.config:
-    adapter.log.info('Poll Interval: ' + confBatPollTime);
     ConfOverridePollInterval = adapter.config.ConfOverridePollInterval ? adapter.config.ConfOverridePollInterval : 0;
     if (ConfOverridePollInterval == 0) {
         confBatPollTime = parseInt(adapter.config.ConfPollInterval);
     } else {
+        adapter.log.info('Override Poll, so use from state and not from settings: ' + adapter.config.ConfOverridePollInterval);
         const OverridePollState = await adapter.getState("System.OverridePoll");
         confBatPollTime = OverridePollState ? OverridePollState.val : 60;
     }
@@ -1303,7 +1303,8 @@ async function main() {
         //confBatPollTime = 60;
         adapter.log.warn('poll to often - recommendation is not more than every 3 seconds');
     }
-
+    adapter.log.info('Poll Interval: ' + confBatPollTime);
+    
     ConfBydTowerCount = adapter.config.ConfBydTowerCount ? adapter.config.ConfBydTowerCount : 1;
 
     adapter.log.info('BYD IP Adress: ' + adapter.config.ConfIPAdress);
@@ -1311,7 +1312,6 @@ async function main() {
     adapter.log.info('Bat Details  : ' + adapter.config.ConfBatDetails);
     ConfBatDetailshowoften = parseInt(adapter.config.ConfDetailshowoften);
     adapter.log.info('Tower count: ' + adapter.config.ConfBydTowerCount);
-    adapter.log.info('Override Poll, so use from state and not from settings: ' + adapter.config.ConfOverridePollInterval);
     adapter.log.info('Battery Poll Time: ' + confBatPollTime);
     /*if (ConfBatDetailshowoften < 10) {
         ConfBatDetails = false;
